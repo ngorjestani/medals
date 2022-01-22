@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {Navbar} from "./components/NavBar";
-import {CountryCard} from "./components/CountryCard";
+import {CountryList} from "./components/CountryList";
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-        <CountryCard />
+        <Navbar />
+        <CountryList />
     </div>
   );
 }
