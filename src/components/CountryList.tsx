@@ -12,21 +12,29 @@ type ICountryListProps = {
 export const CountryList : FunctionComponent<ICountryListProps> = () => {
     const [listOfCountries, setListOfCountries] = useState<Country[]>(countries);
     
-    const addGoldToCountry = (id: string) => {
+    const addMedalToCountry = (countryId: string, medalId: string) => {
         setListOfCountries((prevState) => {
             return prevState.map((item) => (
-                item.id === id 
-                    ? {...item, gold: item.gold + 1} 
+                item.id === countryId 
+                    ? {...item, medals: item.medals.map((m) => (
+                        m.id === medalId
+                            ? {...m, count: m.count + 1} 
+                            : m
+                        ))} 
                     : item
             ));
         });
     };
     
-    const removeGoldFromCountry = (id: string) => {
+    const removeMedalFromCountry = (countryId: string, medalId: string) => {
         setListOfCountries((prevState) => {
             return prevState.map((item) => (
-                item.id === id
-                    ? {...item, gold: item.gold - 1}
+                item.id === countryId
+                    ? {...item, medals: item.medals.map((m) => (
+                            m.id === medalId
+                                ? {...m, count: m.count - 1}
+                                : m
+                        ))}
                     : item
             ));
         });
@@ -37,8 +45,8 @@ export const CountryList : FunctionComponent<ICountryListProps> = () => {
             <CountryCard 
                 key={item.id} 
                 country={item} 
-                handleAddGold={addGoldToCountry}
-                handleRemoveGold={removeGoldFromCountry}
+                handleAddMedal={addMedalToCountry}
+                handleRemoveMedal={removeMedalFromCountry}
             />
         ));
     };

@@ -4,22 +4,27 @@ import Typography from "@mui/material/Typography";
 import {Country} from "../models/types";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import {MedalDisplay} from "./MedalDisplay";
 
 type ICountryCardProps = {
     country: Country,
-    handleAddGold: (id: string) => void,
-    handleRemoveGold: (id: string) => void,
+    handleAddMedal: (countryId: string, medalId: string) => void,
+    handleRemoveMedal: (countryId: string, medalId: string) => void,
 }
 
-export const CountryCard : FunctionComponent<ICountryCardProps> = ({country, handleAddGold, handleRemoveGold}) => {
-    const handleAddGoldButtonClick : MouseEventHandler = (e) => {
-        e.preventDefault();
-        handleAddGold(country.id);
+export const CountryCard : FunctionComponent<ICountryCardProps> = ({country, handleAddMedal, handleRemoveMedal}) => {
+    const handleAddMedalClick = (medalId: string) => {
+        handleAddMedal(country.id, medalId);
     };
 
-    const handleRemoveGoldButtonClick : MouseEventHandler = (e) => {
-        e.preventDefault();
-        handleRemoveGold(country.id);
+    const handleRemoveMedalClick = (medalId: string) => {
+        handleRemoveMedal(country.id, medalId);
+    };
+    
+    const getMedalDisplays = () => {
+        return country.medals.map((m) => (
+            <MedalDisplay key={m.id} medalProp={m} handleAddMedal={handleAddMedalClick} handleRemoveMedal={handleRemoveMedalClick}/>
+        ));
     };
     
     return (
@@ -29,26 +34,7 @@ export const CountryCard : FunctionComponent<ICountryCardProps> = ({country, han
                     <Typography variant='h4'>
                         {country.name}
                     </Typography>
-                    <Typography variant='h6'>
-                        Gold medals: {country.gold}
-                    </Typography>
-                    <CardActions>
-                        <Button
-                            size='small'
-                            color='primary'
-                            onClick={handleRemoveGoldButtonClick}
-                            disabled={country.gold < 1}
-                        >
-                            <RemoveCircleIcon />
-                        </Button>
-                        <Button
-                            size='small'
-                            color='primary'
-                            onClick={handleAddGoldButtonClick}
-                        >
-                            <AddCircleIcon />
-                        </Button>
-                    </CardActions>
+                    {getMedalDisplays()}
                 </CardContent>
             </Card>
         </Grid>

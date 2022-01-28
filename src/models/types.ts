@@ -1,5 +1,14 @@
-﻿export type Country = {
+﻿type Country = {
+    
     id: string,
     name: string,
-    gold: number,
+    medals: Medal[],
 }
+
+type Medal = {
+    id: string,
+    name: string,
+    count: number,
+}
+
+export type {Country, Medal};
