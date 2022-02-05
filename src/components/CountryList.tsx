@@ -4,6 +4,7 @@ import {CountryCard} from "./CountryCard";
 import {nanoid} from "nanoid";
 import {Country} from "../models/types";
 import {countries} from "../models/countries";
+import {AddCountryButton} from "./AddCountryButton";
 
 type ICountryListProps = {
     
@@ -40,6 +41,10 @@ export const CountryList : FunctionComponent<ICountryListProps> = () => {
         });
     };
     
+    const displayAddCountryModal = () => {
+        
+    };
+    
     const getCountryComponents = () => {
         return listOfCountries.map((item) => (
             <CountryCard 
@@ -52,8 +57,11 @@ export const CountryList : FunctionComponent<ICountryListProps> = () => {
     };
     
     return (
-        <Grid container spacing={2} sx={{p: 2}}>
-            {getCountryComponents()}
-        </Grid>
+        <>
+            <Grid container spacing={2} sx={{p: 2}}>
+                {getCountryComponents()}
+            </Grid>
+            <AddCountryButton handleClick={displayAddCountryModal}/>
+        </>
     );
 }
