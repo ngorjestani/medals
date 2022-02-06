@@ -38,7 +38,7 @@ export const AddCountryDialogForm : FunctionComponent<AddCountryDialogFormProps>
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleAddCountryButtonClick}>Add</Button>
+                    <Button onClick={handleAddCountryButtonClick} disabled={!inputValue || !inputValue.trim()}>Add</Button>
                     <Button onClick={handleCancelButtonClick}>Cancel</Button>
                 </DialogActions>
             </Dialog>
