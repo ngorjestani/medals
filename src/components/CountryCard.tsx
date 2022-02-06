@@ -2,23 +2,28 @@
 import {Button, Card, CardActions, CardContent, Grid} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {Country} from "../models/types";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {MedalDisplay} from "./MedalDisplay";
 
 type ICountryCardProps = {
     country: Country,
     handleAddMedal: (countryId: string, medalId: string) => void,
     handleRemoveMedal: (countryId: string, medalId: string) => void,
+    handleRemoveCountry: (countryId: string) => void,
 }
 
-export const CountryCard : FunctionComponent<ICountryCardProps> = ({country, handleAddMedal, handleRemoveMedal}) => {
+export const CountryCard : FunctionComponent<ICountryCardProps> = ({country, handleAddMedal, handleRemoveMedal, handleRemoveCountry}) => {
     const handleAddMedalClick = (medalId: string) => {
         handleAddMedal(country.id, medalId);
     };
 
     const handleRemoveMedalClick = (medalId: string) => {
         handleRemoveMedal(country.id, medalId);
+    };
+    
+    const handleRemoveCountryClick : MouseEventHandler = (e) => {
+        e.preventDefault();
+        handleRemoveCountry(country.id);
     };
     
     const getMedalDisplays = () => {
@@ -36,6 +41,11 @@ export const CountryCard : FunctionComponent<ICountryCardProps> = ({country, han
                     </Typography>
                     {getMedalDisplays()}
                 </CardContent>
+                <CardActions>
+                    <Button color='error' onClick={handleRemoveCountryClick}>
+                        <DeleteIcon />
+                    </Button>
+                </CardActions>
             </Card>
         </Grid>
     );

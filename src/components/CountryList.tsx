@@ -3,8 +3,9 @@ import {Grid} from "@mui/material";
 import {CountryCard} from "./CountryCard";
 import {nanoid} from "nanoid";
 import {Country} from "../models/types";
-import {countries} from "../models/countries";
+import {countries, defaultMedalStartingList} from "../models/countries";
 import {AddCountryButton} from "./AddCountryButton";
+import {AddCountryDialogForm} from "./AddCountryDialogForm";
 
 type ICountryListProps = {
     
@@ -12,6 +13,7 @@ type ICountryListProps = {
 
 export const CountryList : FunctionComponent<ICountryListProps> = () => {
     const [listOfCountries, setListOfCountries] = useState<Country[]>(countries);
+    const [showNewCountryDialog, setShowNewCountryDialog] = useState(false);
     
     const addMedalToCountry = (countryId: string, medalId: string) => {
         setListOfCountries((prevState) => {
@@ -41,8 +43,25 @@ export const CountryList : FunctionComponent<ICountryListProps> = () => {
         });
     };
     
+    const removeCountryFromList = (countryId: string) => {
+        setListOfCountries((prevState) => {
+            return prevState.filter(x => !(x.id === countryId));
+        })
+    };
+    
     const displayAddCountryModal = () => {
-        
+        setShowNewCountryDialog(true);
+    };
+    
+    const closeAddCountryDialog = () => {
+        setShowNewCountryDialog(false);
+    };
+    
+    const addCountryToList = (name: string) => {
+        setListOfCountries(prevState => (
+            [...prevState, {id: nanoid(5), name: name, medals: defaultMedalStartingList}]
+        ));
+        closeAddCountryDialog();
     };
     
     const getCountryComponents = () => {
@@ -52,6 +71,7 @@ export const CountryList : FunctionComponent<ICountryListProps> = () => {
                 country={item} 
                 handleAddMedal={addMedalToCountry}
                 handleRemoveMedal={removeMedalFromCountry}
+                handleRemoveCountry={removeCountryFromList}
             />
         ));
     };
@@ -62,6 +82,11 @@ export const CountryList : FunctionComponent<ICountryListProps> = () => {
                 {getCountryComponents()}
             </Grid>
             <AddCountryButton handleClick={displayAddCountryModal}/>
+            <AddCountryDialogForm 
+                open={showNewCountryDialog} 
+                handleAddCountry={addCountryToList} 
+                handleCloseDialog={closeAddCountryDialog} 
+            />
         </>
     );
 }
