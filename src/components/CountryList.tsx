@@ -1,4 +1,4 @@
-﻿import {FunctionComponent, useState} from "react";
+﻿import {FunctionComponent, useEffect, useState} from "react";
 import {Grid} from "@mui/material";
 import {CountryCard} from "./CountryCard";
 import {nanoid} from "nanoid";
@@ -12,8 +12,12 @@ type ICountryListProps = {
 }
 
 export const CountryList : FunctionComponent<ICountryListProps> = () => {
-    const [listOfCountries, setListOfCountries] = useState<Country[]>(countries);
+    const [listOfCountries, setListOfCountries] = useState<Country[]>([]);
     const [showNewCountryDialog, setShowNewCountryDialog] = useState(false);
+    
+    useEffect(() => {
+        setListOfCountries(countries);
+    }, []);
     
     const addMedalToCountry = (countryId: string, medalId: string) => {
         setListOfCountries((prevState) => {
