@@ -1,12 +1,11 @@
 ﻿type Country = {
     
-    id: string,
+    id: number,
     name: string,
     medals: Medal[],
 }
 
 type Medal = {
-    id: string,
     name: string,
     count: number,
 }

@@ -7,18 +7,18 @@ import {MedalDisplay} from "./MedalDisplay";
 
 type ICountryCardProps = {
     country: Country,
-    handleAddMedal: (countryId: string, medalId: string) => void,
-    handleRemoveMedal: (countryId: string, medalId: string) => void,
-    handleRemoveCountry: (countryId: string) => void,
+    handleAddMedal: (countryId: number, medalName: string, currentCount: number) => void,
+    handleRemoveMedal: (countryId: number, medalName: string, currentCount: number) => void,
+    handleRemoveCountry: (countryId: number) => void,
 }
 
 export const CountryCard : FunctionComponent<ICountryCardProps> = ({country, handleAddMedal, handleRemoveMedal, handleRemoveCountry}) => {
-    const handleAddMedalClick = (medalId: string) => {
-        handleAddMedal(country.id, medalId);
+    const handleAddMedalClick = (medalName: string, count: number) => {
+        handleAddMedal(country.id, medalName, count);
     };
 
-    const handleRemoveMedalClick = (medalId: string) => {
-        handleRemoveMedal(country.id, medalId);
+    const handleRemoveMedalClick = (medalName: string, count: number) => {
+        handleRemoveMedal(country.id, medalName, count);
     };
     
     const handleRemoveCountryClick : MouseEventHandler = (e) => {
@@ -28,7 +28,7 @@ export const CountryCard : FunctionComponent<ICountryCardProps> = ({country, han
     
     const getMedalDisplays = () => {
         return country.medals.map((m) => (
-            <MedalDisplay key={m.id} medalProp={m} handleAddMedal={handleAddMedalClick} handleRemoveMedal={handleRemoveMedalClick}/>
+            <MedalDisplay key={m.name} medalProp={m} handleAddMedal={handleAddMedalClick} handleRemoveMedal={handleRemoveMedalClick}/>
         ));
     };
     
